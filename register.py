@@ -2,15 +2,15 @@ from admin import admin
 import json
 import hashlib
 
-#before creating the user checking unique
+"""  before creating the user this decorator runs to check unique email for the user """
 def before_creating(func):
     def wrapper(self, name, password, email):
         #print('creating')
         try:
-            f = open('users.json' , 'r')
+            f = open('users.json', 'r')
             a = json.load(f)
             dict = a
-            for i in range(0,len(dict)):
+            for i in range(0, len(dict)):
                 if dict[i]['email'] == email:
                     print('Email already registered')
                     return
@@ -20,7 +20,7 @@ def before_creating(func):
          func(self, name, password, email)
     return wrapper
 
-#geting unique id
+"""  geting the id of last user and assaining id+1 to the next user"""
 def unique_id():
     #print('in Unique ID')
     try:
@@ -33,7 +33,7 @@ def unique_id():
         return 1
 
 
-
+"""  register class for registring  user by admin"""
 class register(admin):
 
     #__id = None #id for every user
@@ -42,6 +42,11 @@ class register(admin):
         self._name = None
         self._password = None
         self._email = None
+
+    """  creating user acount
+     id = geting next id for the user
+     password = hashing the password for the user
+     """
     @before_creating
     def create_account(self, name, password, email):
         id = unique_id()
