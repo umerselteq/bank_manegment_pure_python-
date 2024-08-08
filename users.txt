@@ -1,0 +1,2 @@
+{"id": 1, "name": "Umer", "password": "123", "email": "umer@example.com"}
+{"id": 2, "name": "Ali", "password": "456", "email": "ali@example.com"}
