@@ -1,7 +1,8 @@
 
 import json
 
-"""  admin class for admin functionalities"""
+"""  admin class for admin functionalities like
+showing the details of all users , freeze/unfreeze users account"""
 class admin:
     def __init__(self):
         pass
@@ -80,8 +81,29 @@ class admin:
                     f.close()
                     print("User freeze")
                     return
+            else:
+                print("user not found")
+        except FileNotFoundError as e:
+            print(e)
+            return
 
-            print("user not found")
+    """ unfreeze the user account """
+    def unfreeze_user(self):
+        try:
+            f = open("users.json", 'r')
+            data = json.load(f)
+            email = input("Enter person email:")
+
+            for i in range(0, len(data)):
+                if email == data[i]['email']:
+                    data[i]['freeze'] = False
+                    f = open("users.json", 'w')
+                    json.dump(data, f)
+                    f.close()
+                    print("User unfreeze")
+                    return
+            else:
+                print("user not found")
         except FileNotFoundError as e:
             print(e)
             return

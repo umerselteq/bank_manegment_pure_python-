@@ -1,5 +1,7 @@
 from user import user
 import json
+import datetime
+x = datetime.datetime.now()
 
 
 """ class Transaction:
@@ -17,7 +19,7 @@ class transaction(user):
             #opening file and geting the data
             f = open('users.json', 'r')
             data = json.load(f)
-            print("select value in child:", user._select)
+            #print("select value in child:", user._select)
             dictt = data
             person = dictt[user._select]
             #adding amount against the user
@@ -26,10 +28,10 @@ class transaction(user):
             else:
                 person['amount'] = amount
 
-            person['history'].append(f"deposit {amount}")
+            person['history'].append(f"deposit {amount} Date:{(x.strftime("%d-%m-%Y"))}")
             #adding the updated data back to file
             dictt[user._select] = person  #updating the dict amount
-            print(type(dictt))
+            #print(type(dictt))
             f = open('users.json', 'w')
             json.dump(dictt,f)
             f.close()
@@ -48,7 +50,7 @@ class transaction(user):
             if 'amount' in person.keys():
                 if amount < person['amount']:
                     person['amount'] -= amount
-                    person['history'].append(f"withdraw {amount}")
+                    person['history'].append(f"withdraw {amount} Date:{(x.strftime("%d-%m-%Y"))}")
                 else:
                     print("enter smaller amount you dont have enough balance")
                     return
@@ -56,7 +58,7 @@ class transaction(user):
                 print("no balance")
                 return
             dictt[user._select] = person  #updating the dict amount of that perticuler user
-            print(dictt)
+            #print(dictt)
             f = open('users.json', 'w')
             json.dump(dictt, f)
             f.close()
@@ -69,7 +71,7 @@ class transaction(user):
 
 
 
-    """ logged user transfer money to another user"""
+    """ logged user transfer money to another user with limit smaller then 1000"""
     def transfer(self):
         try:
             user2 = None
@@ -91,7 +93,7 @@ class transaction(user):
 
             #transfer amount
             amount = int(input("Enter amount:"))
-            if amount > 1000:
+            if amount > 1001:
                 print("out of limit enter smaller amount")
                 return
 
@@ -108,13 +110,13 @@ class transaction(user):
                 return
 
             #seting history list
-            person['history'].append(f"send {amount}")
-            user2['history'].append(f"received {amount}")
+            person['history'].append(f"send {amount} Date:{(x.strftime("%d-%m-%Y"))}")
+            user2['history'].append(f"received {amount} Date:{(x.strftime("%d-%m-%Y"))}")
             #updating data with new values
             print("amount transferred")
             data[user._select] = person
             data[index] = user2
-            print(data)
+            #print(data)
             f = open('users.json', 'w')
             json.dump(data,f)
             f.close()
